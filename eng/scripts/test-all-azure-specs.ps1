@@ -15,10 +15,18 @@ $specCount = $specFiles | Measure-Object | Select-Object -ExpandProperty Count
 
 Write-Host $allCount $specCount
 
-$specFiles | ForEach-Object -Parallel {
-  Write-Host "Testing $_"
-  npm exec --no -- oad compare $_ $_ -f /tmp
+$indexedSpecFiles = $specFiles | ForEach-Object -Begin {$index = 0} -Process {
+  [PSCustomObject]@{
+    Index = $index
+    Value = $_
+  }
+  $index++
+}
+
+$indexedSpecFiles | ForEach-Object -Parallel { 
+  Write-Host "[$($_.Index)] Testing $($_.Value)"
+  npm exec --no -- oad compare $_.Value $_.Value -f /tmp
   if (-not $?) {
-    throw "oad failed for $_"
+    throw "oad failed for $($_.Value)"
   }
 } -ThrottleLimit 16
