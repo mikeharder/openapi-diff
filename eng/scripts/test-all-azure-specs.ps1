@@ -25,7 +25,7 @@ $indexedSpecFiles = $specFiles | ForEach-Object -Begin {$index = 0} -Process {
 
 $indexedSpecFiles | ForEach-Object -Parallel { 
   Write-Host "[$($_.Index)] Testing $($_.Value)"
-  npm exec --no -- oad compare $_.Value $_.Value -f /tmp
+  npm exec --no -- @azure/oad compare $_.Value $_.Value -f /tmp
   if (-not $?) {
     throw "oad failed for $($_.Value)"
   }
