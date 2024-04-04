@@ -1,11 +1,12 @@
 import * as assert from "assert"
 import * as path from "path"
-import { OpenApiDiff } from ".."
+import { OpenApiDiff } from "../index"
 import { fileUrl } from "./fileUrl"
 
-test("simple", async () => {
+// Regression test for bug #310
+test("diffing a spec with operation-location bug with itself does not throw", async () => {
   const diff = new OpenApiDiff({})
-  const file = "src/test/specs/simple.json"
+  const file = "src/test/specs/operation-location.json"
   const resultStr = await diff.compare(file, file)
   const result = JSON.parse(resultStr)
   const filePath = fileUrl(path.resolve(file))
