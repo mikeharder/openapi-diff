@@ -6,7 +6,7 @@
   },
   "paths": {},
   "definitions": {
-    "Foo": {
+    "Bar": {
       "type": "object",
       "properties": {
         "p1": {
@@ -15,11 +15,11 @@
       },
       "allOf": [
         {
-          "$ref": "./common-types.json#/definitions/Bar"
+          "$ref": "./common-types.json#/definitions/Foo"
         }
       ]
     },
-    "Bar": {
+    "Foo": {
       "type": "object",
       "properties": {
         "p1": {
