@@ -3,6 +3,24 @@ import * as path from "path"
 import { OpenApiDiff } from ".."
 import { fileUrl } from "./fileUrl"
 
+test("should-allow-different-names", async () => {
+  const diff = new OpenApiDiff({})
+  const file = `src/test/specs/incompatible-properties/different-names.json`
+  const filePath = fileUrl(path.resolve(file))
+
+  // expected to pass
+  await diff.compare(file, file)
+})
+
+test("should-allow-duplicate-names", async () => {
+  const diff = new OpenApiDiff({})
+  const file = `src/test/specs/incompatible-properties/duplicate-names.json`
+  const filePath = fileUrl(path.resolve(file))
+
+  // expected to pass
+  await diff.compare(file, file)
+})
+
 // This test is part of regression test suite for https://github.com/Azure/azure-sdk-tools/issues/5981
 // Given a property with given type and name
 // When another property with the same name but an incompatible type is referenced
